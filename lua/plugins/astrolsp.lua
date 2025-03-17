@@ -1,3 +1,4 @@
+-- if true then return {} end
 -- AstroLSP allows you to customize the features in AstroNvim's LSP configuration engine
 -- Configuration documentation can be found with `:h astrolsp`
 -- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
@@ -10,17 +11,23 @@ return {
   opts = {
     -- Configuration table of features provided by AstroLSP
     features = {
-      codelens = true, -- enable/disable codelens refresh on start
-      inlay_hints = false, -- enable/disable inlay hints on start
+      codelens = true,        -- enable/disable codelens refresh on start
+      inlay_hints = false,    -- enable/disable inlay hints on start
       semantic_tokens = true, -- enable/disable semantic token highlighting
     },
     -- customize lsp formatting options
     formatting = {
       -- control auto formatting on save
       format_on_save = {
-        enabled = true, -- enable or disable format on save globally
+        enabled = true,     -- enable or disable format on save globally
         allow_filetypes = { -- enable format on save for specified filetypes only
           -- "go",
+          -- "typescript",
+          -- "javascript",
+          -- "javascriptreact",
+          -- "typescriptreact",
+          -- "lua",
+          -- "css",
         },
         ignore_filetypes = { -- disable format on save for specified filetypes
           -- "python",
@@ -38,11 +45,50 @@ return {
     -- enable servers that you already have installed without mason
     servers = {
       -- "pyright"
+      -- "typescript-language-server", -- 支持 TypeScript
+      -- "tailwindcss",                -- Tailwind CSS 支持
+      -- "eslint",                     -- JavaScript/React 代碼規範檢查
     },
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
     config = {
       -- clangd = { capabilities = { offsetEncoding = "utf-8" } },
+      -- tsserver = {
+      --   -- TypeScript 特定配置
+      --   settings = {
+      --     typescript = {
+      --       inlayHints = {
+      --         includeInlayParameterNameHints = "all",
+      --         includeInlayVariableTypeHints = true,
+      --       },
+      --     },
+      --     javascript = {
+      --       inlayHints = {
+      --         includeInlayParameterNameHints = "all",
+      --       },
+      --     },
+      --   },
+      -- },
+      tailwindcss = {
+        -- Tailwind CSS 智能提示
+        settings = {
+          tailwindCSS = {
+            experimental = {
+              classRegex = {
+                { "clsx\\(([^)]*)\\)",       "(?:'|\")([^\"']*)" },
+                { "classnames\\(([^)]*)\\)", "(?:'|\")([^\"']*)" },
+              },
+            },
+          },
+        },
+      },
+      eslint = {
+        -- ESLint 配置
+        settings = {
+          -- 自動修復
+          autofix = true,
+        },
+      },
     },
     -- customize how language servers are attached
     handlers = {
@@ -52,6 +98,9 @@ return {
       -- the key is the server that is being setup with `lspconfig`
       -- rust_analyzer = false, -- setting a handler to false will disable the set up of that language server
       -- pyright = function(_, opts) require("lspconfig").pyright.setup(opts) end -- or a custom handler function can be passed
+      -- emmet_ls = false,
+      -- graphql = false,
+      -- djlint = false,
     },
     -- Configure buffer local auto commands to add when attaching a language server
     autocmds = {
@@ -70,7 +119,9 @@ return {
           -- the rest of the autocmd options (:h nvim_create_autocmd)
           desc = "Refresh codelens (buffer)",
           callback = function(args)
-            if require("astrolsp").config.features.codelens then vim.lsp.codelens.refresh { bufnr = args.buf } end
+            if require("astrolsp").config.features.codelens then
+              vim.lsp.codelens.refresh { bufnr = args.buf }
+            end
           end,
         },
       },
@@ -88,7 +139,8 @@ return {
           function() require("astrolsp.toggles").buffer_semantic_tokens() end,
           desc = "Toggle LSP semantic highlight (buffer)",
           cond = function(client)
-            return client.supports_method "textDocument/semanticTokens/full" and vim.lsp.semantic_tokens ~= nil
+            return client.supports_method "textDocument/semanticTokens/full"
+                and vim.lsp.semantic_tokens ~= nil
           end,
         },
       },
