@@ -15,13 +15,13 @@ return {
             colored_indent_levels = false,
           },
           mason = true,
-          dap = true, -- 自己新增
-          dap_ui = true, -- 自己新增
-          hop = true, -- 自己新增
-          neotree = true, -- 自己新增
-          lsp_trouble = true, -- 自己新增
+          dap = true,                       -- 自己新增
+          dap_ui = true,                    -- 自己新增
+          hop = true,                       -- 自己新增
+          neotree = true,                   -- 自己新增
+          lsp_trouble = true,               -- 自己新增
 
-          mini = { -- 自己新增
+          mini = {                          -- 自己新增
             enabled = true,
             indentscope_color = "lavender", -- catppuccin color (eg. `lavender`) Default: text
           },
