@@ -21,6 +21,8 @@ return {
         -- install debuggers
         "debugpy",
 
+        "rust-analyzer",
+
         -- install any other package
         "tree-sitter-cli",
       },

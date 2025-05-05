@@ -42,14 +42,29 @@ return {
       opt = { -- vim.opt.<key>
         relativenumber = true, -- sets vim.opt.relativenumber
         number = true, -- sets vim.opt.number
-        spell = false, -- sets vim.opt.spell
+        spell = true, -- sets vim.opt.spell
         signcolumn = "yes", -- sets vim.opt.signcolumn to yes
-        wrap = false, -- sets vim.opt.wrap
+
+        -- tab 設定（2 space 寬度，常見於前端專案）
+        tabstop = 2,
+        shiftwidth = 2,
+        expandtab = true,
+        smartindent = true,
+
+        textwidth = 80, -- 超過 80 字元就自動斷行
+        wrap = true, -- sets vim.opt.wrap
+        linebreak = true, -- 善用空白處斷行，避免把單字切斷
+        breakindent = true, -- 換行的行與前一行對齊縮排
+        mouse = "a", -- 允許滑鼠操作（偶爾需要複製貼上）
       },
       g = { -- vim.g.<key>
         -- configure global vim variables (vim.g)
         -- NOTE: `mapleader` and `maplocalleader` must be set in the AstroNvim opts or before `lazy.setup`
         -- This can be found in the `lua/lazy_setup.lua` file
+        -- 這邊可以設定全域變數（vim.g）
+        -- 注意：mapleader 要設定在 `lazy_setup.lua` 中才會正確生效
+        spell = true,
+        spelllang = "en_us", -- 拼字語言為英文
       },
     },
     -- Mappings can be configured through AstroCore as well.

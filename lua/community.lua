@@ -19,4 +19,5 @@ return {
   { import = "astrocommunity.recipes.vscode-icons" },
   { import = "astrocommunity.motion.flash-nvim" },
   { import = "astrocommunity.pack.markdown" },
+  {import = "astrocommunity.completion.copilot-lua"},
 }
